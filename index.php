@@ -50,7 +50,7 @@
     <div id="all_brands">
         <h1>Manufacturers</h1>
         <?php foreach($brands as $brand): ?>
-            <h2>Brand name: <?=$brand['sneaker_brand']?></h2>
+            <h3>Brand name: <?=$brand['sneaker_brand']?> <small><a href="edit_brand.php?id=<?=$brand['sneaker_brand_id']?>">edit</a></small></h3>
         <?php endforeach ?>
     </div>
    </body>
