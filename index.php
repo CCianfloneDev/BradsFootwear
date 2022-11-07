@@ -42,8 +42,9 @@
     </div>
    <div id="all_categories">
         <h1>Categories</h1>
+        <h2><a href="create_category.php">Create category</a></h2>
         <?php foreach($categories as $category): ?>
-            <h2>Category name: <?=$category['category_name']?> <small><a href="edit_category.php?id=<?=$category['category_id']?>">edit</a></small></h2>
+            <h3>Category name: <?=$category['category_name']?> <small><a href="edit_category.php?id=<?=$category['category_id']?>">edit</a></small></h3>
         <?php endforeach ?>
     </div>
     <div id="all_brands">
