@@ -1,7 +1,7 @@
 <?php
 /*
     Cole Cianflone
-    Sept 26th, 2022
+    Nov 7th, 2022
     Purpose: Script to authenticate users to site.
 */
 
