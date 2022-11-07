@@ -49,6 +49,7 @@
     </div>
     <div id="all_brands">
         <h1>Manufacturers</h1>
+        <h2><a href="create_brand.php">Create brand</a></h2>
         <?php foreach($brands as $brand): ?>
             <h3>Brand name: <?=$brand['sneaker_brand']?> <small><a href="edit_brand.php?id=<?=$brand['sneaker_brand_id']?>">edit</a></small></h3>
         <?php endforeach ?>
