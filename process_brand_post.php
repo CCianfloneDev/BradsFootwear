@@ -8,30 +8,29 @@
 // connect to db
 require('connect.php');
 
-// if ($_POST['command'] == "Create") {
-//     if (strlen($_POST['category_name']) > 1) {
-//         // sanitize category name
-//         $category_name   = filter_input(INPUT_POST, 'category_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+if ($_POST['command'] == "Create") {
+    if (strlen($_POST['sneaker_brand']) > 1) {
+        // sanitize category name
+        $sneaker_brand   = filter_input(INPUT_POST, 'sneaker_brand', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
-//         // prepare insert statement
-//         $query     = "INSERT INTO sneaker_category (category_name) VALUES (:category_name)";
-//         $statement = $db->prepare($query);
+        // prepare insert statement
+        $query     = "INSERT INTO sneaker_manufacturer (sneaker_brand) VALUES (:sneaker_brand)";
+        $statement = $db->prepare($query);
         
-//         // bind values to insert statement
-//         $statement->bindValue(':category_name', $category_name);
+        // bind values to insert statement
+        $statement->bindValue(':sneaker_brand', $sneaker_brand);
         
-//         // send value to DB.
-//         if ($statement->execute()) {
-//             // Redirect after update.
-//             header("Location: index.php");
+        // send value to DB.
+        if ($statement->execute()) {
+            // Redirect after update.
+            header("Location: index.php");
             
-//             exit;
-//         }
-//     } else {
-//         echo "<p>Category creation failed.</p>";
-//     }
-// } else 
-if ($_POST['command'] == "Update") {
+            exit;
+        }
+    } else {
+        echo "<p>Category creation failed.</p>";
+    }
+} else if ($_POST['command'] == "Update") {
     if (strlen($_POST['sneaker_brand']) > 1) {
         // sanitize category name and id
         $sneaker_brand   = filter_input(INPUT_POST, 'sneaker_brand', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
