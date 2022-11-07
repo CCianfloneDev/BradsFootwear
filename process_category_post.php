@@ -7,11 +7,10 @@
 
 // connect to db
 require('connect.php');
-echo filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 if ($_POST['command'] == "Create") {
     if (strlen($_POST['category_name']) > 1) {
-        // sanitize title and content
+        // sanitize category name
         $category_name   = filter_input(INPUT_POST, 'category_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
         // prepare insert statement
@@ -33,7 +32,7 @@ if ($_POST['command'] == "Create") {
     }
 } else if ($_POST['command'] == "Update") {
     if (strlen($_POST['category_name']) > 1) {
-        // sanitize title and id
+        // sanitize category name and id
         $category_name   = filter_input(INPUT_POST, 'category_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $id              = filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT);
         
