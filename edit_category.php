@@ -2,7 +2,7 @@
 /*
     Cole Cianflone
     Nov 7th, 2022
-    Purpose: Script to edit a post.
+    Purpose: Script to edit a category.
 */
 
 require("connect.php");
@@ -31,7 +31,7 @@ $category = $statement->fetchAll();
    <body>
 
          <div id="category_to_edit">
-            <form action="process_post.php" method="post">
+            <form action="process_category_post.php" method="post">
                <fieldset>
                   <div class="blog_post">
                      <p>
@@ -39,9 +39,9 @@ $category = $statement->fetchAll();
                         <input name="category_name" id="category_name" value="<?=$category[0]['category_name']?>"/>
                      </p>
                      <p>
-                        <input type="hidden" name="id" value="<?=$_GET['id']?>" />
+                        <input type="hidden" name="category_id" value="<?=$_GET['id']?>" />
                         <input type="submit" name="command" value="Update" />
-                        <input type="submit" name="command" value="Delete" onclick="return confirm('Are you sure you wish to delete this post?')" />
+                        <input type="submit" name="command" value="Delete" onclick="return confirm('Are you sure you wish to delete this category?')" />
                      </p>
                   </div>
                </fieldset>
