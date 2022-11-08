@@ -34,6 +34,7 @@
     <h1>BELOW DATA IS ALL TABLES IN CMS</h1>
    <div id="all_footwear">
         <h1>Sneakers</h1>
+        <h2><a href="create_sneaker.php">Create sneaker</a></h2>
         <?php foreach($sneakers as $sneaker): ?>
             <h2>Sneaker Name: <?=$sneaker['sneaker_name']?> ||
                 <small><a href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>">edit</a></small>
@@ -54,7 +55,5 @@
             <h3>Brand name: <?=$brand['sneaker_brand']?> <small><a href="edit_brand.php?id=<?=$brand['sneaker_brand_id']?>">edit</a></small></h3>
         <?php endforeach ?>
     </div>
-            <pre><?=print_r($categories)?></pre>
-            <?=$sneaker['sneaker_category_id']?>
    </body>
 </html>
