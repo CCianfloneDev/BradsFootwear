@@ -20,6 +20,7 @@
     $statement->execute(); // The query is now executed.
     $brands = $statement->fetchAll();
 
+
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +36,7 @@
         <h1>Sneakers</h1>
         <?php foreach($sneakers as $sneaker): ?>
             <h2>Sneaker Name: <?=$sneaker['sneaker_name']?> ||
-                Sneaker category: <?=$categories[$sneaker['sneaker_category_id']-1]['category_name']?> ||
-                Sneaker Manufacturer: <?=$brands[$sneaker['sneaker_brand_id']-1]['sneaker_brand']?>
+                <small><a href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>">edit</a></small>
             </h2>
         <?php endforeach ?>
     </div>
@@ -54,5 +54,7 @@
             <h3>Brand name: <?=$brand['sneaker_brand']?> <small><a href="edit_brand.php?id=<?=$brand['sneaker_brand_id']?>">edit</a></small></h3>
         <?php endforeach ?>
     </div>
+            <pre><?=print_r($categories)?></pre>
+            <?=$sneaker['sneaker_category_id']?>
    </body>
 </html>
