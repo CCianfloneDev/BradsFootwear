@@ -6,7 +6,6 @@
 */
 
 require("connect.php");
-require("admin.php");
 
 // gets id of post
 $sneaker_id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
