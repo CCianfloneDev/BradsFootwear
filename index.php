@@ -34,21 +34,20 @@
     <?php if(isset($_SESSION['logged_in_user'])):?>
         <h1>Thanks for logging in <em><?=$_SESSION['logged_in_user']?></em></h1>
     <?php endif ?>
-    <h1>BELOW DATA IS ALL TABLES IN CMS</h1>
     <?php if(isset($_SESSION['logged_in_user'])):?>
         <h1><a href="logout.php">Log Out</a></h1>
         <?php else:?>
             <h1><a href="login.php">Sign in</a></h1>
             <h1><a href="register.php">Register</a></h1>
     <?php endif ?>
-
    <div id="all_footwear">
         <h1>Sneakers</h1>
         <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
         <h2><a href="create_sneaker.php">Create sneaker</a></h2>
         <?php endif ?>
         <?php foreach($sneakers as $sneaker): ?>
-            <h2>Sneaker Name: <?=$sneaker['sneaker_name']?>
+            <h2>Sneaker Name: <?=$sneaker['sneaker_name']?> 
+                || <small><a href="view_sneaker.php?id=<?=$sneaker['sneaker_id']?>">View Sneaker</a></small>
                 <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
                 || <small><a href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>">edit</a></small>
                 <?php endif ?>
