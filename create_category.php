@@ -6,8 +6,6 @@
 */
 
 require("connect.php");
-require("admin.php");
-
 
 ?>
 <!DOCTYPE html>
