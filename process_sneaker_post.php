@@ -25,11 +25,13 @@ if ($_POST['command'] == "Create") {
         $sneaker_image_path = 'uploads/'.$filename;
         $sneaker_brand_id = filter_input(INPUT_POST, 'sneaker_brand_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $sneaker_category_id = filter_input(INPUT_POST, 'sneaker_category_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $user_id_modify = filter_input(INPUT_POST, 'user_id_modify', FILTER_SANITIZE_NUMBER_INT);
+        $user_id_insert = filter_input(INPUT_POST, 'user_id_insert', FILTER_SANITIZE_NUMBER_INT);
 
         // prepare update statement
         $query     = "INSERT INTO sneaker (sneaker_name, sneaker_size, sneaker_value, sneaker_description,
-                                           sneaker_image_path, sneaker_brand_id, sneaker_category_id) 
-                      VALUES (:sneaker_name, :sneaker_size, :sneaker_value, :sneaker_description, :sneaker_image_path, :sneaker_brand_id, :sneaker_category_id)";
+                                           sneaker_image_path, sneaker_brand_id, sneaker_category_id, user_id_modify, user_id_insert) 
+                      VALUES (:sneaker_name, :sneaker_size, :sneaker_value, :sneaker_description, :sneaker_image_path, :sneaker_brand_id, :sneaker_category_id, :user_id_modify, :user_id_insert)";
         $statement = $db->prepare($query);
         
         // bind values to update statement
@@ -39,7 +41,9 @@ if ($_POST['command'] == "Create") {
         $statement->bindValue(':sneaker_description', $sneaker_description);
         $statement->bindValue(':sneaker_image_path', $sneaker_image_path);
         $statement->bindValue(':sneaker_brand_id', $sneaker_brand_id);
-        $statement->bindValue(':sneaker_category_id', $sneaker_category_id);       
+        $statement->bindValue(':sneaker_category_id', $sneaker_category_id);
+        $statement->bindValue(':user_id_modify', $user_id_modify);    
+        $statement->bindValue(':user_id_insert', $user_id_insert);         
         
         // send value to DB.
         if ($statement->execute()) {
@@ -78,8 +82,7 @@ if ($_POST['command'] == "Create") {
         $sneaker_brand_id = filter_input(INPUT_POST, 'sneaker_brand_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $sneaker_category_id = filter_input(INPUT_POST, 'sneaker_category_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $date_modify = date('Y-m-d H:i:s');
-        $user_id_modify = filter_input(INPUT_POST, 'user_id_modify', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $user_id_insert = filter_input(INPUT_POST, 'user_id_insert', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $user_id_modify = filter_input(INPUT_POST, 'user_id_modify', FILTER_SANITIZE_NUMBER_INT);
 
         // prepare update statement
         $query     = "UPDATE sneaker SET sneaker_name = :sneaker_name, sneaker_size = :sneaker_size, sneaker_value = :sneaker_value,
