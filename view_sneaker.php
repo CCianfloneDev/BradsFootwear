@@ -6,6 +6,7 @@
 */
 
 require("connect.php");
+session_start();
 
 // gets id of post
 $sneaker_id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
@@ -48,9 +49,12 @@ $users = $statement->fetchAll();
    </head>
    <body>
          <div id="sneaker_to_view">
+            <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
+                <h2><a href="edit_sneaker.php?id=<?=$sneaker_id?>">Edit This Sneaker</a></h2>
+            <?php endif ?>
             <h3>Sneaker Name: <?=$sneaker[0]['sneaker_name']?></h3>
             <h3>Sneaker Size: <?=$sneaker[0]['sneaker_size']?></h3>
-            <h3>Sneaker Value: <?=$sneaker[0]['sneaker_value']?></h3>
+            <h3>Sneaker Value: $<?=$sneaker[0]['sneaker_value']?></h3>
             <?php foreach($brands as $brand): ?>
                 <?php if($sneaker[0]['sneaker_brand_id'] == $brand['sneaker_brand_id']):?>
                     <h3>Sneaker Brand: <?=$brand['sneaker_brand']?></h3>
