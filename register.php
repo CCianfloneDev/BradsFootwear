@@ -8,9 +8,8 @@
 require("connect.php");
 
 if (count($_POST) > 0) {
-
-    $user_name = $_POST['user_name'];
-    $user_pass = $_POST['user_pass'];
+    $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $user_pass = filter_input(INPUT_POST, 'user_pass', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $query = "INSERT INTO user (user_name, user_pass) VALUES (:user_name, :user_pass)";
     $statement = $db->prepare($query);
 
