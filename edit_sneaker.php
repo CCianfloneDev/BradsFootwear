@@ -4,8 +4,8 @@
     Nov 7th, 2022
     Purpose: Script to edit a sneaker.
 */
-
 require("connect.php");
+session_start();
 
 // gets id of post
 $sneaker_id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
@@ -32,11 +32,20 @@ $statement = $db->prepare($query); // Returns a PDOStatement object.
 $statement->execute(); // The query is now executed.
 $categories = $statement->fetchAll();
 
-/* SELECT ALL DATA FROM users table*/
+/* SELECT ALL DATA FROM users table */
 $query = "SELECT * FROM user";
 $statement = $db->prepare($query); // Returns a PDOStatement object.
 $statement->execute(); // The query is now executed.
 $users = $statement->fetchAll();
+
+/* SELECT USER CURRENTLY EDITING PAGE */
+$user_name = $_SESSION['logged_in_user'];
+$query = "SELECT * FROM user WHERE user_name = :user_name";
+$statement = $db->prepare($query);
+// bind values to insert statement
+$statement->bindValue(":user_name", $user_name, PDO::PARAM_STR);
+$statement->execute();
+$userEditing = $statement->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -134,7 +143,7 @@ $users = $statement->fetchAll();
                     </p>
                      <p>
                         <input type="hidden" name="sneaker_id" value="<?=$_GET['id']?>"/>
-                        <input type="hidden" name="user_id_modify" value="<?=$sneaker[0]['user_id_modify']?>"/>
+                        <input type="hidden" name="user_id_modify" value="<?=$userEditing[0]['user_id']?>"/>
                         <input type="hidden" name="user_id_insert" value="<?=$sneaker[0]['user_id_insert']?>"/>
                         <input type="submit" name="command" value="Update" />
                         <input type="submit" name="command" value="Delete" onclick="return confirm('Are you sure you wish to delete this sneaker?')" />
