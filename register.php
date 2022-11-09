@@ -60,4 +60,7 @@ if (count($_POST) > 0) {
             </form>
          </div>
    </body>
+   <footer>
+    <small>If you wish to have admin access please reach out to the site owner.</small>
+   </footer>
 </html>
