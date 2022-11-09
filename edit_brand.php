@@ -6,7 +6,6 @@
 */
 
 require("connect.php");
-require("admin.php");
 
 // gets id of post
 $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
@@ -33,7 +32,7 @@ $brands = $statement->fetchAll();
          <div id="brand_to_edit">
             <form action="process_brand_post.php" method="post">
                <fieldset>
-                  <div class="blog_post">
+                  <div class="sneaker_edit">
                      <p>
                         <label for="sneaker_brand">Brand Name</label>
                         <input name="sneaker_brand" id="sneaker_brand" value="<?=$brands[0]['sneaker_brand']?>"/>
