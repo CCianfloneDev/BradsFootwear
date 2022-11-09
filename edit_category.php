@@ -6,7 +6,6 @@
 */
 
 require("connect.php");
-require("admin.php");
 
 // gets id of post
 $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
@@ -33,7 +32,7 @@ $category = $statement->fetchAll();
          <div id="category_to_edit">
             <form action="process_category_post.php" method="post">
                <fieldset>
-                  <div class="blog_post">
+                  <div class="category_edit">
                      <p>
                         <label for="category_name">Category Name</label>
                         <input name="category_name" id="category_name" value="<?=$category[0]['category_name']?>"/>
