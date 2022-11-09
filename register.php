@@ -50,7 +50,7 @@ if (count($_POST) > 0) {
                      </p>
                      <p>
                         <label for="user_pass">Password:</label>
-                        <input name="user_pass" id="user_pass" placeholder="Enter a password..." value="" required/>
+                        <input name="user_pass" id="user_pass" type="password" placeholder="Enter a password..." value="" required/>
                      </p>
                      <p>
                         <input type="submit" name="command" value="Create account" />
