@@ -6,7 +6,6 @@
 */
 
 require("connect.php");
-require("admin.php");
 
 /* SELECT ALL DATA FROM sneaker_manufacturer table */
 $query = "SELECT * FROM sneaker_manufacturer";
