@@ -6,6 +6,7 @@
 */
 
 require("connect.php");
+session_start();
 
 /* SELECT ALL DATA FROM sneaker_manufacturer table */
 $query = "SELECT * FROM sneaker_manufacturer";
@@ -19,6 +20,14 @@ $statement = $db->prepare($query); // Returns a PDOStatement object.
 $statement->execute(); // The query is now executed.
 $categories = $statement->fetchAll();
 
+/* SELECT USER CURRENTLY EDITING PAGE */
+$user_name = $_SESSION['logged_in_user'];
+$query = "SELECT * FROM user WHERE user_name = :user_name";
+$statement = $db->prepare($query);
+// bind values to insert statement
+$statement->bindValue(":user_name", $user_name, PDO::PARAM_STR);
+$statement->execute();
+$userEditing = $statement->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -93,6 +102,8 @@ $categories = $statement->fetchAll();
 
                      </p>
                      <p>
+                        <input type="hidden" name="user_id_modify" value="<?=$userEditing[0]['user_id']?>"/>
+                        <input type="hidden" name="user_id_insert" value="<?=$userEditing[0]['user_id']?>"/>
                         <input type="submit" name="command" value="Create" />
                      </p>
                   </div>
