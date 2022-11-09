@@ -32,8 +32,7 @@
    </head>
    <body>
     <?php if(isset($_SESSION['logged_in_user'])):?>
-        <h1><?=$_SESSION['logged_in_user']?></h1>
-        <h1><?=$_SESSION['admin_is_on']?></h1>
+        <h1>Thanks for logging in <em><?=$_SESSION['logged_in_user']?></em></h1>
     <?php endif ?>
     <h1>BELOW DATA IS ALL TABLES IN CMS</h1>
     <?php if(isset($_SESSION['logged_in_user'])):?>
@@ -45,10 +44,14 @@
 
    <div id="all_footwear">
         <h1>Sneakers</h1>
+        <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
         <h2><a href="create_sneaker.php">Create sneaker</a></h2>
+        <?php endif ?>
         <?php foreach($sneakers as $sneaker): ?>
-            <h2>Sneaker Name: <?=$sneaker['sneaker_name']?> ||
-                <small><a href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>">edit</a></small>
+            <h2>Sneaker Name: <?=$sneaker['sneaker_name']?>
+                <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
+                || <small><a href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>">edit</a></small>
+                <?php endif ?>
             </h2>
         <?php endforeach ?>
     </div>
