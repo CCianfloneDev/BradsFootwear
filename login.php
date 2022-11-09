@@ -9,8 +9,8 @@ require("connect.php");
 
 if (count($_POST) > 0) {
     $isSuccess = false;
-    $user_name = $_POST['user_name'];
-    $user_pass = $_POST['user_pass'];
+    $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $user_pass = filter_input(INPUT_POST, 'user_pass', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $query = "SELECT * FROM user WHERE user_name = :user_name";
     $statement = $db->prepare($query);
     // bind values to insert statement
