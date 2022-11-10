@@ -87,7 +87,7 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
    </head>
    <body>
         <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
-            <h2><a href="edit_sneaker.php?id=<?=$sneaker_id?>">Edit This Sneaker</a></h2>
+            <h2><a href="edit_sneaker.php?redirect=view_sneaker&id=<?=$sneaker_id?>">Edit This Sneaker</a></h2>
             <?php endif ?>
             <?php if(isset($_SESSION['logged_in_user'])):?>
             <h1><a href="logout.php?redirect=view_sneaker&id=<?=$sneaker_id?>">Log Out</a></h1>
@@ -136,7 +136,12 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
          <?php foreach($comments as $comment):?>
             <?php foreach($users as $user):?>
                 <?php if($comment['user_id'] === $user['user_id']):?>
-                    <h1>Comment posted by: <?=$user['user_name']?></h1>
+                <h1>
+                    Comment posted by: <?=$user['user_name']?>
+                    <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
+                        <a href="edit_comment.php?delete=true&comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Delete this comment.</a>
+                    <?php endif ?>
+                </h1>
                 <?php endif ?>
             <?php endforeach ?>
             <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['logged_in_user_id'] == $comment['user_id']):?>
