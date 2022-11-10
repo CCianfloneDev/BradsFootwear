@@ -16,14 +16,14 @@ require("connect.php");
       <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
    </head>
    <body>
-
+   <h1><a href="index.php">Home</a></h1>
          <div id="category_to_create">
             <form action="process_category_post.php" method="post">
                <fieldset>
                   <div class="category">
                      <p>
                         <label for="category_name">Category Name</label>
-                        <input name="category_name" id="category_name" value=""/>
+                        <input name="category_name" id="category_name" placeholder="Enter category name..." value=""/>
                      </p>
                      <p>
                         <input type="submit" name="command" value="Create" />
