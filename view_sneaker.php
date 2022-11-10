@@ -86,10 +86,14 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
       <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
    </head>
    <body>
-         <div id="sneaker_to_view">
-            <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
-                <h2><a href="edit_sneaker.php?id=<?=$sneaker_id?>">Edit This Sneaker</a></h2>
+        <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
+            <h2><a href="edit_sneaker.php?id=<?=$sneaker_id?>">Edit This Sneaker</a></h2>
             <?php endif ?>
+            <?php if(isset($_SESSION['logged_in_user'])):?>
+            <h1><a href="logout.php?redirect=view_sneaker&id=<?=$sneaker_id?>">Log Out</a></h1>
+        <?php endif ?>
+        <h1><a href="index.php">Home</a></h1>
+         <div id="sneaker_to_view">
             <h3>Sneaker Name: <?=$sneaker[0]['sneaker_name']?></h3>
             <h3>Sneaker Size: <?=$sneaker[0]['sneaker_size']?></h3>
             <h3>Sneaker Value: $<?=$sneaker[0]['sneaker_value']?></h3>
