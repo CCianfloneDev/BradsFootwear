@@ -21,17 +21,21 @@ if (count($_POST) > 0) {
    
       // send value to DB.
       if ($statement->execute()) {
-         // Redirect after update.
-         header("Location: index.php");
-         
+         // Redirect after login.
+         if ($_GET['redirect'] == "view_sneaker")
+         {
+            header("Location: view_sneaker.php?id=".$_GET['id']);
+         } else 
+         {
+            header("Location: index.php");
+         }
          exit;
       } else {
-         echo '<script>alert("Sneaker creation failed.")</script>';
+         echo '<script>alert("Account registration failed.")</script>';
       }
    } else {
       echo '<script>alert("Passwords MUST match.")</script>';
    }
-
 }
 ?>
 <!DOCTYPE html>
