@@ -16,14 +16,14 @@ require("connect.php");
       <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
    </head>
    <body>
-
+   <h1><a href="index.php">Home</a></h1>
          <div id="brand_to_create">
             <form action="process_brand_post.php" method="post">
                <fieldset>
                   <div class="brand">
                      <p>
                         <label for="sneaker_brand">Brand Name</label>
-                        <input name="sneaker_brand" id="sneaker_brand" value=""/>
+                        <input name="sneaker_brand" id="sneaker_brand" placeholder="Enter a brand name..."value=""/>
                      </p>
                      <p>
                         <input type="submit" name="command" value="Create" />
