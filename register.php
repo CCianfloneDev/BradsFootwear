@@ -4,32 +4,36 @@
     Nov 9th, 2022
     Purpose: Script to register a user.
 */
-
 require("connect.php");
 
 if (count($_POST) > 0) {
-    $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $user_pass = filter_input(INPUT_POST, 'user_pass', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $query = "INSERT INTO user (user_name, user_pass) VALUES (:user_name, :user_pass)";
-    $statement = $db->prepare($query);
+   $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+   $user_pass = filter_input(INPUT_POST, 'user_pass', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+   $user_pass_confirm = filter_input(INPUT_POST, 'user_pass_confirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    // bind values to insert statement
-    $statement->bindValue(':user_name', $user_name);
-    $statement->bindValue(':user_pass', $user_pass);
+   if ($user_pass === $user_pass_confirm) {
+      $query = "INSERT INTO user (user_name, user_pass) VALUES (:user_name, :user_pass)";
+      $statement = $db->prepare($query);
+   
+      // bind values to insert statement
+      $statement->bindValue(':user_name', $user_name);
+      $statement->bindValue(':user_pass', $user_pass);
+   
+      // send value to DB.
+      if ($statement->execute()) {
+         // Redirect after update.
+         header("Location: index.php");
+         
+         exit;
+      } else {
+         echo '<script>alert("Sneaker creation failed.")</script>';
+      }
+   } else {
+      echo '<script>alert("Passwords MUST match.")</script>';
+   }
 
-    // send value to DB.
-    if ($statement->execute()) {
-        // Redirect after update.
-        header("Location: index.php");
-        
-        exit;
-    } else {
-        echo "<p>Sneaker creation failed.</p>";
-    }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html>
    <head>
@@ -50,6 +54,10 @@ if (count($_POST) > 0) {
                      <p>
                         <label for="user_pass">Password:</label>
                         <input name="user_pass" id="user_pass" type="password" placeholder="Enter a password..." value="" required/>
+                     </p>
+                     <p>
+                        <label for="user_pass_confirm">Confirm Password:</label>
+                        <input name="user_pass_confirm" id="user_pass_confirm" type="password" placeholder="Confirm the password..." value="" required/>
                      </p>
                      <p>
                         <input type="submit" name="command" value="Create account" />
