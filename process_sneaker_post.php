@@ -74,11 +74,14 @@ if ($_POST['command'] == "Create") {
             $sneaker = $statement->fetchAll();
 
             $sneaker_image_path = $sneaker[0]['sneaker_image_path'];
-        } else
-        {
+        } else {
             $sneaker_image_path = 'uploads/'.$filename;
         }
-
+        
+        if($_POST['remove_image'] == 'remove_image') {
+            $sneaker_image_path = '';
+        }
+        
         $sneaker_brand_id = filter_input(INPUT_POST, 'sneaker_brand_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $sneaker_category_id = filter_input(INPUT_POST, 'sneaker_category_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $date_modify = date('Y-m-d H:i:s');
@@ -93,7 +96,7 @@ if ($_POST['command'] == "Create") {
         $statement = $db->prepare($query);
         
         // bind values to update statement
-        $statement->bindValue(':sneaker_id', $sneaker_id, PDO::PARAM_INT);
+        $statement->bindValue(':sneaker_id', $sneaker_id);
         $statement->bindValue(':sneaker_name', $sneaker_name);
         $statement->bindValue(':sneaker_size', $sneaker_size);
         $statement->bindValue(':sneaker_value', $sneaker_value);
