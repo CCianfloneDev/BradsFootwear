@@ -28,7 +28,7 @@ $brands = $statement->fetchAll();
       <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
    </head>
    <body>
-
+   <h1><a href="index.php">Home</a></h1>
          <div id="brand_to_edit">
             <form action="process_brand_post.php" method="post">
                <fieldset>
