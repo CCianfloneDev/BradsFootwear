@@ -38,7 +38,7 @@ $userEditing = $statement->fetchAll();
       <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
    </head>
    <body>
-
+   <h1><a href="index.php">Home</a></h1>
          <div id="sneaker_to_create">
             <form action="process_sneaker_post.php" method="post" enctype='multipart/form-data'>
                <fieldset>
