@@ -55,6 +55,10 @@ $userEditing = $statement->fetchAll();
       <title>sneaker - Edit </title>
       <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
    </head>
+   <h1><a href="index.php">Home</a></h1>
+   <?php if(isset($_GET['redirect']) && $_GET['redirect'] == 'view_sneaker'):?>
+      <h2><a href="view_sneaker.php?id=<?=$_GET['id']?>"><-- Return</a></h2>
+   <?php endif ?>
    <body>
          <div id="sneaker_to_edit">
             <form action="process_sneaker_post.php" method="post" enctype='multipart/form-data'>
