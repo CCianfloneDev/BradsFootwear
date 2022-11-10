@@ -18,7 +18,7 @@ $statement1->bindValue(':comment_id', $comment_id);
 $statement1->execute(); // The query is now executed.
 $comment = $statement1->fetchAll();
 
-if ($_POST){
+if ($_POST || isset($_GET['delete'])){
     if(strlen($_POST['comment_content']) > 0 && $_POST['command'] == "Edit"){
         // sanitize all form fields if they arent already pulled from db
         $comment_content     = filter_input(INPUT_POST, 'comment_content', FILTER_SANITIZE_STRING);
@@ -45,9 +45,7 @@ if ($_POST){
         } else {
         echo "<p>sneaker update failed.</p>";
         }
-    } else if($_POST['command'] == "Delete") {
-        $comment_id = $comment[0]['comment_id'];
-    
+    } else if($_POST['command'] == "Delete" || $_GET['delete'] == true) {
         // prepare delete statement
         $query     = "DELETE FROM comment WHERE comment_id = :comment_id";
         $statement = $db->prepare($query);
@@ -74,7 +72,9 @@ if ($_POST){
       <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
    </head>
    <body>
-    <pre><?=print_r($comment)?></pre>
+   <?php if(isset($_GET['redirect']) && $_GET['redirect'] == 'view_sneaker'):?>
+      <h2><a href="view_sneaker.php?id=<?=$_GET['sneaker_id']?>"><-- Return</a></h2>
+   <?php endif ?>
          <div id="comment_to_edit">
          <form action="" method="post">
                <fieldset>
