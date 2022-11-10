@@ -113,7 +113,9 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
                 <?=$sneaker[0]['sneaker_description']?>
             </textarea>
             <br>
+            <?php if(strlen($sneaker[0]['sneaker_image_path']) > 0):?>
             <img src="<?=$sneaker[0]['sneaker_image_path']?>" alt="sneaker-image" width="350" height="250">
+            <?php endif ?>
             <p>
                 <small>
                     <?=$sneaker[0]['date_modify']?> - last modified
