@@ -2,42 +2,62 @@
 /*
     Cole Cianflone
     Nov 9th, 2022
-    Purpose: Script to register a user.
+    Purpose: Script to login a user either admin or regular user.
 */
+
 require("connect.php");
 
 if (count($_POST) > 0) {
-   $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-   $user_pass = filter_input(INPUT_POST, 'user_pass', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-   $user_pass_confirm = filter_input(INPUT_POST, 'user_pass_confirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $isSuccess = false;
+    $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $user_pass = filter_input(INPUT_POST, 'user_pass', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $query = "SELECT * FROM user WHERE user_name = :user_name";
+    $statement = $db->prepare($query);
+    // bind values to insert statement
+    $statement->bindValue(":user_name", $user_name, PDO::PARAM_STR);
+    $statement->execute();
+    $users = $statement->fetchAll();
+    
+    foreach($users as $user)
+    {
+        if ($user_name == $user['user_name'] &&
+            $user_pass == $user['user_pass']){
+                echo $user_name . " logged in.";
+                $isSuccess = true;
 
-   if ($user_pass === $user_pass_confirm) {
-      $query = "INSERT INTO user (user_name, user_pass) VALUES (:user_name, :user_pass)";
-      $statement = $db->prepare($query);
-   
-      // bind values to insert statement
-      $statement->bindValue(':user_name', $user_name);
-      $statement->bindValue(':user_pass', $user_pass);
-   
-      // send value to DB.
-      if ($statement->execute()) {
-         // Redirect after login.
-         if ($_GET['redirect'] == "view_sneaker")
-         {
-            header("Location: view_sneaker.php?id=".$_GET['id']);
-         } else 
-         {
-            header("Location: index.php");
-         }
-         exit;
-      } else {
-         echo '<script>alert("Account registration failed.")</script>';
+                // sets a session with value of the username for current logged in user.
+                if(!isset($_SESSION['logged_in_user']))
+                {
+                  session_start();
+                  $_SESSION['logged_in_user'] = $user_name;
+                  $_SESSION['logged_in_user_id'] = $user['user_id'];
+                  $_SESSION['admin_is_on'] = 0;
+
+                  // if the admin_access field is 1 start admin session
+                  if($user['admin_access'] == 1){
+                     $_SESSION['admin_is_on'] = 1;
+                  // else start regular user session
+                  } else {
+                     $_SESSION['admin_is_on'] = 0;
+                  }
+                  // Redirect after login.
+                  if ($_GET['redirect'] == "view_sneaker")
+                  {
+                     header("Location: view_sneaker.php?id=".$_GET['id']);
+                  } else 
+                  {
+                     header("Location: index.php");
+                  }
+                  exit;
+                }
+         } else {
+            $isSuccess = false;
       }
-   } else {
-      echo '<script>alert("Passwords MUST match.")</script>';
    }
 }
+
 ?>
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -46,9 +66,18 @@ if (count($_POST) > 0) {
       <link rel="stylesheet" href="style.css" type="text/css">
    </head>
    <body>
-    <h1>NOTE: This account gives you the ability to comment on sneaker posts.</h1>
-    <h1><a href="index.php">Home</a></h1>
+   <h1><a href="index.php">Home</a></h1>
+   <?php if(isset($_GET['redirect']) && $_GET['redirect'] == 'view_sneaker'):?>
+      <h2><a href="view_sneaker.php?id=<?=$_GET['id']?>"><-- Return</a></h2>
+   <?php endif ?>
          <div id="login_form">
+            <?php if($_POST && $isSuccess === true):?>
+               <h1>Log in succesful.</h1>
+               <h1><?=$_SESSION['logged_in_user']?></h1>
+               <h1><?=$_SESSION['admin_is_on']?></h1>
+               <?php elseif($_POST && $isSuccess === false) :?>
+                  <h1>Log in failed.</h1>
+            <?php endif ?>
             <form action="" method="post">
                <fieldset>
                   <div class="signin">
@@ -61,18 +90,11 @@ if (count($_POST) > 0) {
                         <input name="user_pass" id="user_pass" type="password" placeholder="Enter a password..." value="" required/>
                      </p>
                      <p>
-                        <label for="user_pass_confirm">Confirm Password:</label>
-                        <input name="user_pass_confirm" id="user_pass_confirm" type="password" placeholder="Confirm the password..." value="" required/>
-                     </p>
-                     <p>
-                        <input type="submit" name="command" value="Create account" />
+                        <input type="submit" name="command" value="Login" />
                      </p>
                   </div>
                </fieldset>
             </form>
          </div>
    </body>
-   <footer>
-    <small>If you wish to have admin access please reach out to the site owner.</small>
-   </footer>
 </html>
