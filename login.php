@@ -66,6 +66,7 @@ if (count($_POST) > 0) {
       <link rel="stylesheet" href="style.css" type="text/css">
    </head>
    <body>
+   <h1><a href="index.php">Home</a></h1>
          <div id="login_form">
             <?php if($_POST && $isSuccess === true):?>
                <h1>Log in succesful.</h1>
