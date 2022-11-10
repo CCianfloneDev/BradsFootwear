@@ -139,13 +139,13 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
                 <h1>
                     Comment posted by: <?=$user['user_name']?>
                     <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
-                        <a href="edit_comment.php?delete=true&comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Delete this comment.</a>
+                        <a onclick="return confirm('Are you sure you wish to delete this comment?')" href="edit_comment.php?delete=true&comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Delete this comment.</a>
                     <?php endif ?>
                 </h1>
                 <?php endif ?>
             <?php endforeach ?>
             <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['logged_in_user_id'] == $comment['user_id']):?>
-                <p><a href="edit_comment.php?comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Edit your comment</a></p>
+                <p><a href="edit_comment.php?redirect=view_sneaker&comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Edit your comment</a></p>
             <?php endif ?>
             <small>
                 <?=$comment['date_insert']?> - initial creation
