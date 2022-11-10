@@ -96,13 +96,16 @@ $userEditing = $statement->fetchAll();
                         <br>
                         <textarea rows="5" cols="50" name="sneaker_description"><?=$sneaker[0]['sneaker_description']?></textarea>
                      </p>
-                     
                      <p>
                         <label for='sneaker_image_path'>Sneaker Image</label>
                         <input type='file' name='sneaker_image_path' id='sneaker_image_path'>
-
                      </p>
-                     <img src="<?=$sneaker[0]['sneaker_image_path']?>" alt="sneaker-image" width="350" height="250">
+                     <?php if(strlen($sneaker[0]['sneaker_image_path']) > 0):?>
+                        <label for="vehicle1">Check this if you wish to remove the image.</label><br>
+                        <input type="checkbox" id="remove_image" name="remove_image" value="remove_image">
+                        <br>
+                        <img src="<?=$sneaker[0]['sneaker_image_path']?>" alt="sneaker-image" width="350" height="250">
+                     <?php endif ?>
                      <p>
                         <label for="sneaker_brand_id">Sneaker Brand</label>
                         <select name="sneaker_brand_id" id="sneaker_brand_id">
