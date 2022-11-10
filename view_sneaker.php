@@ -39,8 +39,9 @@ $statement->execute(); // The query is now executed.
 $users = $statement->fetchAll();
 
 /* SELECT ALL DATA FROM comment table*/
-$query = "SELECT * FROM comment";
+$query = "SELECT * FROM comment WHERE sneaker_id = :sneaker_id";
 $statement = $db->prepare($query); // Returns a PDOStatement object.
+$statement->bindValue(":sneaker_id", $sneaker_id, PDO::PARAM_INT);
 $statement->execute(); // The query is now executed.
 $comments = $statement->fetchAll();
 
