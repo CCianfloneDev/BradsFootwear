@@ -47,6 +47,10 @@ if (count($_POST) > 0) {
    </head>
    <body>
     <h1>NOTE: This account gives you the ability to comment on sneaker posts.</h1>
+    <h1><a href="index.php">Home</a></h1>
+    <?php if(isset($_GET['redirect']) && $_GET['redirect'] == 'view_sneaker'):?>
+      <h2><a href="view_sneaker.php?id=<?=$_GET['id']?>"><-- Return</a></h2>
+   <?php endif ?>
          <div id="login_form">
             <form action="" method="post">
                <fieldset>
