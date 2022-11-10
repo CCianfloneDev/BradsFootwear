@@ -44,7 +44,7 @@ $statement = $db->prepare($query); // Returns a PDOStatement object.
 $statement->execute(); // The query is now executed.
 $comments = $statement->fetchAll();
 
-if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0) {
+if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['command'] == "Comment") {
     // get user that posted comment to access the id.
     $user_name = $_SESSION['logged_in_user'];
     $query = "SELECT * FROM user WHERE user_name = :user_name";
@@ -136,7 +136,7 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0) {
                 <?php endif ?>
             <?php endforeach ?>
             <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['logged_in_user_id'] == $comment['user_id']):?>
-                <p><a href="edit_comment.php">Edit your comment</a></p>
+                <p><a href="edit_comment.php?comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Edit your comment</a></p>
             <?php endif ?>
             <small>
                 <?=$comment['date_insert']?> - initial creation
