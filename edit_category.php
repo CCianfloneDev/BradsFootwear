@@ -28,7 +28,7 @@ $category = $statement->fetchAll();
       <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
    </head>
    <body>
-
+   <h1><a href="index.php">Home</a></h1>
          <div id="category_to_edit">
             <form action="process_category_post.php" method="post">
                <fieldset>
