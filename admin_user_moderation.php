@@ -32,7 +32,9 @@
         </h1>
         <h2>
             <?php if($user['admin_access'] == 1):?>
+                <?php if($user['user_id'] != $_SESSION['logged_in_user_id']):?>
                 <p><small>Has admin access <a href="change_access.php?admin=revoke&user_id=<?=$user['user_id']?>">Revoke admin access.</a></small></p>
+                <?php endif ?>
                 <?php else: ?>
                     <p><small>Does not have admin access <a href="change_access.php?admin=grant&user_id=<?=$user['user_id']?>">Grant admin access.</a></small></p>
             <?php endif ?>
