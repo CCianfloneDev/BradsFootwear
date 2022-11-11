@@ -43,6 +43,9 @@
       <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
    </head>
    <body>
+   <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
+            <h5><a href="admin_user_moderation.php">Moderation</a></h5>
+        <?php endif ?>
     <?php if(isset($_SESSION['logged_in_user'])):?>
         <h1>Thanks for logging in <em><?=$_SESSION['logged_in_user']?></em></h1>
     <?php endif ?>
