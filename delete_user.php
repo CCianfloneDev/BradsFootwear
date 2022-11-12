@@ -11,11 +11,17 @@
     
     // bind values to delete statement
     $statement->bindValue(':user_id', $user_id);
-
-    echo $user_id;
     
     // send value to DB.
     if ($statement->execute()) {
+        // Delete any comments from the user.
+        $comment_query     = "DELETE FROM comment WHERE user_id = :user_id";
+        $statement2 = $db->prepare($comment_query);
+        // bind values to delete statement
+        $statement2->bindValue(':user_id', $user_id);
+        $statement2->execute();
+        
+        // Redirect after update.
         // wasnt the currently logged in admins account so return to account moderation page.
         if ($_GET['own_account'] == 'false') {
             header("Location: admin_user_moderation.php");
@@ -25,5 +31,4 @@
         }
         exit;
     }
-    
 ?>
