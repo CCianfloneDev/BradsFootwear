@@ -9,7 +9,16 @@
     $categories = $statement->fetchAll();
 
     /* SELECT ALL DATA FROM sneakers table */
-    $query = "SELECT * FROM sneaker";
+    if (isset($_GET['sort']) && $_GET['sort'] == 'name'){
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_name DESC";
+    } else if(isset($_GET['sort']) && $_GET['sort'] == 'brand') {
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_brand_id DESC";
+    } else if(isset($_GET['sort']) && $_GET['sort'] == 'price') {
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_value DESC";
+    } else {
+        $query = "SELECT * FROM sneaker";
+    }
+
     $statement = $db->prepare($query); // Returns a PDOStatement object.
     $statement->execute(); // The query is now executed.
     $sneakers = $statement->fetchAll();
@@ -44,7 +53,7 @@
    </head>
    <body>
    <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
-            <h5><a href="admin_user_moderation.php">Moderation</a></h5>
+            <h5><a href="admin_user_moderation.php">User Account Moderation</a></h5>
         <?php endif ?>
     <?php if(isset($_SESSION['logged_in_user'])):?>
         <h1>Thanks for logging in <em><?=$_SESSION['logged_in_user']?></em></h1>
@@ -75,6 +84,10 @@
                </fieldset>
             </form>
          </div>
+         <h1><a href="index.php">Default sort</a></h1>
+         <h1><a href="index.php?sort=name">Sort by name &#9660</a></h1>
+         <h1><a href="index.php?sort=brand">Sort by brand &#9660</a></h1>
+         <h1><a href="index.php?sort=price">Sort by price &#9660</a></h1>
         <?php if($_POST) :?>
             <h2><a href="index.php?reset=true">View all sneakers</a></h2>
             <?php foreach($searchResult as $sneaker):?>
