@@ -42,9 +42,12 @@ $userEditing = $statement->fetchAll();
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
    </head>
    <body>
+   <?php if(isset($_GET['message']) && $_GET['message'] == 'invalid'):?>
+         <script>alert("image upload was invalid...")</script>
+      <?php endif ?>
    <h1><a href="index.php">Home</a></h1>
          <div id="sneaker_to_create">
-            <form action="process_sneaker_post.php" method="post" enctype='multipart/form-data'>
+            <form action="process_sneaker_post.php?processType=create" method="post" enctype='multipart/form-data'>
                <fieldset>
                   <div class="sneaker">
                     <p>
