@@ -64,9 +64,6 @@ $userEditing = $statement->fetchAll();
       <h2><a href="view_sneaker.php?id=<?=$_GET['id']?>"><-- Return</a></h2>
    <?php endif ?>
    <body>
-      <?php if(isset($_GET['message']) && $_GET['message'] == 'invalid'):?>
-         <script>alert("image upload was invalid...")</script>
-      <?php endif ?>
          <div id="sneaker_to_edit">
             <form action="process_sneaker_post.php" method="post" enctype='multipart/form-data'>
                <fieldset>
@@ -103,6 +100,14 @@ $userEditing = $statement->fetchAll();
                         <br>
                         <textarea rows="5" cols="50" name="sneaker_description"><?=$sneaker[0]['sneaker_description']?></textarea>
                      </p>
+                     <?php if(isset($_GET['message']) && $_GET['message'] == 'invalid'):?>
+                     <div class="fluid alert alert-danger alert-dismissible fade show" role="alert" style="width: 400px;">
+                        The image you tried to upload was invalid..
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <?php endif ?>
                      <p>
                         <label for='sneaker_image_path'>Sneaker Image</label>
                         <input type='file' name='sneaker_image_path' id='sneaker_image_path'>
