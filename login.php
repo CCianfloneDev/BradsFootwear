@@ -78,23 +78,21 @@ if (count($_POST) > 0) {
                <?php elseif($_POST && $isSuccess === false) :?>
                   <h1>Log in failed.</h1>
             <?php endif ?>
+            <div class="container">
             <form action="" method="post">
                <fieldset>
-                  <div class="signin">
-                     <p>
-                        <label for="user_name">User Name:</label>
-                        <input name="user_name" id="user_name" placeholder="Enter a username..." value="" required/>
-                     </p>
-                     <p>
+                     <div class="form-group">
+                        <label for="user_name">User Name</label>
+                        <input class="form-control" name="user_name" id="user_name" placeholder="Enter a username..." value="" required/>
+                     </div>
+                     <div class="form-group">
                         <label for="user_pass">Password:</label>
-                        <input name="user_pass" id="user_pass" type="password" placeholder="Enter a password..." value="" required/>
-                     </p>
-                     <p>
-                        <input type="submit" name="command" value="Login" />
-                     </p>
-                  </div>
+                        <input class="form-control" name="user_pass" id="user_pass" type="password" placeholder="Enter a password..." value="" required/>
+                     </div>
+                     <input class="btn btn-primary" type="submit" name="command" value="Log-in" />
                </fieldset>
             </form>
-         </div>
+            <small>If you wish to have admin access please reach out to the site owner.</small>
+   </div>
    </body>
 </html>
