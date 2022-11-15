@@ -112,7 +112,7 @@
             <h2><a href="index.php?reset=true">View all sneakers</a></h2>
             <?php foreach($searchResult as $sneaker):?>
                 <h2><?=$sneaker['sneaker_name']?> 
-                || <small><a href="view_sneaker.php?id=<?=$sneaker['sneaker_id']?>">View Sneaker</a></small>
+                 <small><a href="view_sneaker.php?id=<?=$sneaker['sneaker_id']?>">View Sneaker</a></small>
                 <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
                 || <small><a href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>">edit</a></small>
                 <?php endif ?>
@@ -121,7 +121,7 @@
         <?php elseif(!$_POST || $_GET['reset'] == true): ?>
         <?php foreach($sneakers as $sneaker): ?>
             <h2><?=$sneaker['sneaker_name']?> 
-                || <small><a href="view_sneaker.php?id=<?=$sneaker['sneaker_id']?>">View Sneaker</a></small>
+                 <small><a href="view_sneaker.php?id=<?=$sneaker['sneaker_id']?>">View Sneaker</a></small>
                 <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
                 || <small><a href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>">edit</a></small>
                 <?php endif ?>
