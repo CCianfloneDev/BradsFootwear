@@ -47,35 +47,28 @@ if (count($_POST) > 0) {
       <title>Register</title>
    </head>
    <body>
-    <h1>NOTE: This account gives you the ability to comment on sneaker posts.</h1>
     <?php if(isset($_GET['redirect']) && $_GET['redirect'] == 'view_sneaker'):?>
       <h2><a href="view_sneaker.php?id=<?=$_GET['id']?>">&#8592; Return</a></h2>
    <?php endif ?>
-         <div id="login_form">
+   <div class="container">
             <form action="" method="post">
                <fieldset>
-                  <div class="signin">
-                     <p>
-                        <label for="user_name">User Name:</label>
-                        <input name="user_name" id="user_name" placeholder="Enter a username..." value="" required/>
-                     </p>
-                     <p>
+                     <div class="form-group">
+                        <label for="user_name">User Name</label>
+                        <input class="form-control" name="user_name" id="user_name" placeholder="Enter a username..." value="" required/>
+                     </div>
+                     <div class="form-group">
                         <label for="user_pass">Password:</label>
-                        <input name="user_pass" id="user_pass" type="password" placeholder="Enter a password..." value="" required/>
-                     </p>
-                     <p>
+                        <input class="form-control" name="user_pass" id="user_pass" type="password" placeholder="Enter a password..." value="" required/>
+                     </div>
+                     <div class="form-group">
                         <label for="user_pass_confirm">Confirm Password:</label>
-                        <input name="user_pass_confirm" id="user_pass_confirm" type="password" placeholder="Confirm the password..." value="" required/>
-                     </p>
-                     <p>
-                        <input type="submit" name="command" value="Create account" />
-                     </p>
-                  </div>
+                        <input class="form-control" name="user_pass_confirm" id="user_pass_confirm" type="password" placeholder="Confirm the password..." value="" required/>
+                     </div>
+                     <input class="btn btn-primary" type="submit" name="command" value="Create account" />
                </fieldset>
             </form>
-         </div>
+            <small>If you wish to have admin access please reach out to the site owner.</small>
+   </div>
    </body>
-   <footer>
-    <small>If you wish to have admin access please reach out to the site owner.</small>
-   </footer>
 </html>
