@@ -6,7 +6,8 @@
 */
 
 require("connect.php");
-session_start();
+require("templates/header.php");
+//session_start();
 
 // gets id of post
 $sneaker_id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
@@ -85,19 +86,11 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
    <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>Sneaker - View</title>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
    </head>
    <body>
         <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
             <h2><a href="edit_sneaker.php?redirect=view_sneaker&id=<?=$sneaker_id?>">Edit This Sneaker</a></h2>
-            <?php endif ?>
-            <?php if(isset($_SESSION['logged_in_user'])):?>
-            <h1><a href="logout.php?redirect=view_sneaker&id=<?=$sneaker_id?>">Log Out</a></h1>
         <?php endif ?>
-        <h1><a href="index.php">Home</a></h1>
          <div id="sneaker_to_view">
             <h3>Sneaker Name: <?=$sneaker[0]['sneaker_name']?></h3>
             <h3>Sneaker Size: <?=$sneaker[0]['sneaker_size']?></h3>
