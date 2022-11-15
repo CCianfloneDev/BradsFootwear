@@ -8,13 +8,20 @@
 // connect to db
 require('connect.php');
 
-// code moves the uploaded image to uploads folder.
-
 $filename = basename($_FILES['sneaker_image_path']['name']); 
-$newname = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR. $filename;
+$allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png'];
+$actual_file_extension   = pathinfo($filename, PATHINFO_EXTENSION);
+$image_is_valid = false;
 
-move_uploaded_file($_FILES['sneaker_image_path']['tmp_name'], $newname);
+if(in_array($actual_file_extension, $allowed_file_extensions)){
+    // code moves the uploaded image to uploads folder.
+    $newname = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR. $filename;
 
+    move_uploaded_file($_FILES['sneaker_image_path']['tmp_name'], $newname);
+    $image_is_valid = true;
+} else {
+    $image_is_valid = false;
+}
 
 if ($_POST['command'] == "Create") {
     if (strlen($_POST['sneaker_name']) > 1) {
@@ -22,7 +29,14 @@ if ($_POST['command'] == "Create") {
         $sneaker_size   = filter_input(INPUT_POST, 'sneaker_size', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $sneaker_value  = filter_input(INPUT_POST, 'sneaker_value', FILTER_SANITIZE_NUMBER_INT);
         $sneaker_description = filter_input(INPUT_POST, 'sneaker_description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $sneaker_image_path = 'uploads/'.$filename;
+        if ($image_is_valid) {
+            $sneaker_image_path = 'uploads/'.$filename;
+        } else if($_FILES['sneaker_image_path']['tmp_name'] == null) {
+            $sneaker_image_path = '';
+        } else {
+            header("Location: create_sneaker.php?message=invalid");
+            exit;
+        }
         $sneaker_brand_id = filter_input(INPUT_POST, 'sneaker_brand_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $sneaker_category_id = filter_input(INPUT_POST, 'sneaker_category_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $user_id_modify = filter_input(INPUT_POST, 'user_id_modify', FILTER_SANITIZE_NUMBER_INT);
@@ -63,9 +77,10 @@ if ($_POST['command'] == "Create") {
         $sneaker_size   = filter_input(INPUT_POST, 'sneaker_size', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $sneaker_value  = filter_input(INPUT_POST, 'sneaker_value', FILTER_SANITIZE_NUMBER_INT);
         $sneaker_description = filter_input(INPUT_POST, 'sneaker_description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        // if no file was submitted set it to the value currently found in database.
-        if ($_FILES['sneaker_image_path']['tmp_name'] == null)
-        {
+
+        if ($image_is_valid) {
+            $sneaker_image_path = 'uploads/'.$filename;
+        } else if($_FILES['sneaker_image_path']['tmp_name'] == null) {
             $query = "SELECT * FROM sneaker WHERE sneaker_id = :sneaker_id";
             $statement = $db->prepare($query);
             // bind values to insert statement
@@ -75,7 +90,8 @@ if ($_POST['command'] == "Create") {
 
             $sneaker_image_path = $sneaker[0]['sneaker_image_path'];
         } else {
-            $sneaker_image_path = 'uploads/'.$filename;
+            header("Location: edit_sneaker.php?message=invalid&id=".$sneaker_id);
+            exit;
         }
         
         if($_POST['remove_image'] == 'remove_image') {
