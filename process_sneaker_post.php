@@ -16,7 +16,6 @@ $image_is_valid = false;
 if(in_array($actual_file_extension, $allowed_file_extensions)){
     // code moves the uploaded image to uploads folder.
     $newname = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR. $filename;
-
     move_uploaded_file($_FILES['sneaker_image_path']['tmp_name'], $newname);
     $image_is_valid = true;
 } else {
@@ -95,6 +94,7 @@ if ($_POST['command'] == "Create") {
         }
         
         if($_POST['remove_image'] == 'remove_image') {
+            unlink($sneaker_image_path);
             $sneaker_image_path = '';
         }
         
