@@ -42,9 +42,6 @@ $userEditing = $statement->fetchAll();
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
    </head>
    <body>
-   <?php if(isset($_GET['message']) && $_GET['message'] == 'invalid'):?>
-         <script>alert("image upload was invalid...")</script>
-      <?php endif ?>
    <h1><a href="index.php">Home</a></h1>
          <div id="sneaker_to_create">
             <form action="process_sneaker_post.php?processType=create" method="post" enctype='multipart/form-data'>
@@ -102,11 +99,17 @@ $userEditing = $statement->fetchAll();
                         <br>
                         <textarea rows="5" cols="50" name="sneaker_description" placeholder="Enter a description of the footwear..."></textarea>
                      </p>
-                     
+                     <?php if(isset($_GET['message']) && $_GET['message'] == 'invalid'):?>
+                     <div class="fluid alert alert-danger alert-dismissible fade show" role="alert" style="width: 400px;">
+                        The image you tried to upload was invalid..
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <?php endif ?>
                      <p>
                         <label for='sneaker_image_path'>Upload an image</label>
                         <input type='file' name='sneaker_image_path' id='sneaker_image_path'>
-
                      </p>
                      <p>
                         <input type="hidden" name="user_id_modify" value="<?=$userEditing[0]['user_id']?>"/>
