@@ -64,6 +64,9 @@ $userEditing = $statement->fetchAll();
       <h2><a href="view_sneaker.php?id=<?=$_GET['id']?>"><-- Return</a></h2>
    <?php endif ?>
    <body>
+      <?php if(isset($_GET['message']) && $_GET['message'] == 'invalid'):?>
+         <script>alert("image upload was invalid...")</script>
+      <?php endif ?>
          <div id="sneaker_to_edit">
             <form action="process_sneaker_post.php" method="post" enctype='multipart/form-data'>
                <fieldset>
