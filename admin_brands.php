@@ -22,7 +22,7 @@
             <h1>Brands</h1>
             <h2><a href="create_brand.php">Create brand</a></h2>
             <?php foreach($brands as $brand): ?>
-                <h3>Brand name: <?=$brand['sneaker_brand']?> <small><a class="badge badge-info" href="edit_brand.php?id=<?=$brand['sneaker_brand_id']?>">edit</a></small></h3>
+                <h3><?=$brand['sneaker_brand']?> <small><a class="badge badge-info" href="edit_brand.php?id=<?=$brand['sneaker_brand_id']?>">edit</a></small></h3>
             <?php endforeach ?>
         </div>
     <?php endif ?>
