@@ -22,6 +22,30 @@ if (count($_POST) > 0) {
    
       // send value to DB.
       if ($statement->execute()) {
+         if(!isset($_SESSION['logged_in_user']))
+                {
+                  session_start();
+                  $_SESSION['logged_in_user'] = $user_name;
+                  $_SESSION['logged_in_user_id'] = $user['user_id'];
+                  $_SESSION['admin_is_on'] = 0;
+
+                  // if the admin_access field is 1 start admin session
+                  if($user['admin_access'] == 1){
+                     $_SESSION['admin_is_on'] = 1;
+                  // else start regular user session
+                  } else {
+                     $_SESSION['admin_is_on'] = 0;
+                  }
+                  // Redirect after login.
+                  if ($_GET['redirect'] == "view_sneaker")
+                  {
+                     header("Location: view_sneaker.php?id=".$_GET['id']);
+                  } else 
+                  {
+                     header("Location: index.php");
+                  }
+                  exit;
+                }
          // Redirect after login.
          if ($_GET['redirect'] == "view_sneaker")
          {
