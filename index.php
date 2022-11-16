@@ -2,13 +2,37 @@
     require("connect.php");
     require("templates/header.php");
 
-    if (isset($_GET['sort']) && $_GET['sort'] == 'name'){
+    if (isset($_GET['sort']) && $_GET['sort'] == 'nameASC'){
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_name ASC";
+    } else if(isset($_GET['sort']) && $_GET['sort'] == 'nameDESC') {
         $query = "SELECT * FROM sneaker ORDER BY sneaker_name DESC";
-    } else if(isset($_GET['sort']) && $_GET['sort'] == 'brand') {
-        $query = "SELECT * FROM sneaker ORDER BY sneaker_brand_id DESC";
-    } else if(isset($_GET['sort']) && $_GET['sort'] == 'price') {
+    } 
+
+    else if(isset($_GET['sort']) && $_GET['sort'] == 'priceASC') {
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_value ASC";
+    } else if(isset($_GET['sort']) && $_GET['sort'] == 'priceDESC') {
         $query = "SELECT * FROM sneaker ORDER BY sneaker_value DESC";
-    } else {
+    }
+    
+    else if(isset($_GET['sort']) && $_GET['sort'] == 'brandASC') {
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_brand_id ASC";
+    } else if(isset($_GET['sort']) && $_GET['sort'] == 'brandDESC') {
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_brand_id DESC";
+    }
+    
+    else if(isset($_GET['sort']) && $_GET['sort'] == 'categoryASC') {
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_category_id ASC";
+    } else if(isset($_GET['sort']) && $_GET['sort'] == 'categoryDESC') {
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_category_id DESC";
+    }
+    
+    else if(isset($_GET['sort']) && $_GET['sort'] == 'sizeASC') {
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_size ASC";
+    } else if(isset($_GET['sort']) && $_GET['sort'] == 'sizeDESC') {
+        $query = "SELECT * FROM sneaker ORDER BY sneaker_size DESC";
+    }
+    
+    else {
         $query = "SELECT * FROM sneaker";
     }
 
@@ -16,6 +40,18 @@
     $statement = $db->prepare($query); // Returns a PDOStatement object.
     $statement->execute(); // The query is now executed.
     $sneakers = $statement->fetchAll();
+
+    /* SELECT ALL DATA FROM sneaker_manufacturer table */
+    $query = "SELECT * FROM sneaker_manufacturer";
+    $statement = $db->prepare($query); // Returns a PDOStatement object.
+    $statement->execute(); // The query is now executed.
+    $brands = $statement->fetchAll();
+
+    /* SELECT ALL DATA FROM sneaker_categorys table*/
+    $query = "SELECT * FROM sneaker_category";
+    $statement = $db->prepare($query); // Returns a PDOStatement object.
+    $statement->execute(); // The query is now executed.
+    $categories = $statement->fetchAll();
 
     if ($_POST && $_POST['command'] == 'Search')
     {
@@ -52,7 +88,7 @@
                   <div class="search">
                   <h2>Search for sneakers!</h2>
                      <p>
-                        <input class="form-control mr-sm-2" name="search_input" type="search" id="search_input" style="width:400px;" placeholder="Search by name of sneaker, value, or size of sneaker..." value=""/>
+                        <input class="form-control mr-sm-2" name="search_input" type="search" id="search_input" style="width:230px;" placeholder="Search by name of sneaker..." value=""/>
                      </p>
                      <p>
                         <input class="btn btn-primary" type="submit" name="command" value="Search" />
@@ -61,41 +97,98 @@
                </fieldset>
             </form>
          </div>
-            <?php if(!isset($_GET['searched'])):?>
-         <div class="row">
-        <div class="col-sm">
-         <h1><a href="index.php">Default sort</a></h1>
-        </div>
-        <div class="col-sm">
-         <h1><a href="index.php?sort=name">Sort by name &#9660;</a></h1>
-        </div>
-         <div class="col-sm">
-         <h1><a href="index.php?sort=brand">Sort by brand &#9660;</a></h1>
-         </div>
-         <div class="col-sm">
-         <h1><a href="index.php?sort=price">Sort by price &#9660;</a></h1>
-         </div>
-        </div>
-        <?php endif ?>
         <?php if($_POST) :?>
             <h2><a href="index.php?reset=true">View all sneakers</a></h2>
-            <?php foreach($searchResult as $sneaker):?>
-                <h2><?=$sneaker['sneaker_name']?> 
-                 <small><a class="badge badge-primary" href="view_sneaker.php?id=<?=$sneaker['sneaker_id']?>">View Sneaker</a></small>
-                <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
-                || <small><a class="badge badge-info" href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>">edit</a></small>
-                <?php endif ?>
-            </h2>
-            <?php endforeach ?>
+                <div class="container">
+                <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">Sneaker Name</th>
+                    <th scope="col">Sneaker Value</th>
+                    <th scope="col">Sneaker Brand</th>
+                    <th scope="col">Sneaker Category</th>
+                    <th scope="col">Sneaker Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($searchResult as $sneaker):?>
+                    <tr>
+                    <td><a href="view_sneaker.php?id=<?=$sneaker['sneaker_id']?>"><?=$sneaker['sneaker_name']?></a></td>
+                    <td>$<?=$sneaker['sneaker_value']?></td>
+                    <?php foreach($brands as $brand):?>
+                        <?php if($brand['sneaker_brand_id'] == $sneaker['sneaker_brand_id']):?>
+                            <td><?=$brand['sneaker_brand']?></td>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                    <?php foreach($categories as $category):?>
+                        <?php if($category['category_id'] == $sneaker['sneaker_category_id']):?>
+                            <td><?=$category['category_name']?></td>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                    <td><?=$sneaker['sneaker_size']?></td>
+                    </tr>
+                    <?php endforeach ?>
+                </tbody>
+                </table>
+            </div>
         <?php elseif(!$_POST || $_GET['reset'] == true): ?>
-        <?php foreach($sneakers as $sneaker): ?>
-            <h2><?=$sneaker['sneaker_name']?> 
-                 <small><a class="badge badge-primary" href="view_sneaker.php?id=<?=$sneaker['sneaker_id']?>">View Sneaker</a></small>
-                <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
-                || <small><a href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>" class="badge badge-info">edit</a></small>
-                <?php endif ?>
-            </h2>
-        <?php endforeach ?>
+            <div class="container">
+                <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <?php if(isset($_GET['sort']) && $_GET['sort'] == 'nameDESC'):?>
+                        <th scope="col">Sneaker Name<a href="index.php?sort=nameASC">&#9650;</a></th>
+                        <?php else: ?>
+                            <th scope="col">Sneaker Name<a href="index.php?sort=nameDESC">&#9660;</a></th>
+                    <?php endif ?>
+                    <?php if(isset($_GET['sort']) && $_GET['sort'] == 'priceDESC'):?>
+                        <th scope="col">Sneaker Value<a href="index.php?sort=priceASC">&#9650;</a></th>
+                        <?php else: ?>
+                            <th scope="col">Sneaker Value<a href="index.php?sort=priceDESC">&#9660;</a></th>
+                    <?php endif ?>
+                    <?php if(isset($_GET['sort']) && $_GET['sort'] == 'brandDESC'):?>
+                        <th scope="col">Sneaker Brand<a href="index.php?sort=brandASC">&#9650;</a></th>
+                        <?php else: ?>
+                            <th scope="col">Sneaker Brand<a href="index.php?sort=brandDESC">&#9660;</a></th>
+                    <?php endif ?>
+                    <?php if(isset($_GET['sort']) && $_GET['sort'] == 'categoryDESC'):?>
+                        <th scope="col">Sneaker Category<a href="index.php?sort=categoryASC">&#9650;</a></th>
+                        <?php else: ?>
+                            <th scope="col">Sneaker Category<a href="index.php?sort=categoryDESC">&#9660;</a></th>
+                    <?php endif ?>
+                    <?php if(isset($_GET['sort']) && $_GET['sort'] == 'sizeDESC'):?>
+                        <th scope="col">Sneaker Size<a href="index.php?sort=sizeASC">&#9650;</a></th>
+                        <?php else: ?>
+                            <th scope="col">Sneaker Size<a href="index.php?sort=sizeDESC">&#9660;</a></th>
+                    <?php endif ?>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($sneakers as $sneaker):?>
+                    <tr>
+                    <td>
+                        <a href="view_sneaker.php?id=<?=$sneaker['sneaker_id']?>"><?=$sneaker['sneaker_name']?></a>
+                        <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
+                            <small><a href="edit_sneaker.php?id=<?=$sneaker['sneaker_id']?>" class="badge badge-info">edit</a></small>
+                        <?php endif ?>
+                    </td>
+                    <td>$<?=$sneaker['sneaker_value']?></td>
+                    <?php foreach($brands as $brand):?>
+                        <?php if($brand['sneaker_brand_id'] == $sneaker['sneaker_brand_id']):?>
+                            <td><?=$brand['sneaker_brand']?></td>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                    <?php foreach($categories as $category):?>
+                        <?php if($category['category_id'] == $sneaker['sneaker_category_id']):?>
+                            <td><?=$category['category_name']?></td>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                    <td><?=$sneaker['sneaker_size']?></td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+                </table>
+            </div>
         <?php endif ?>
     </div>
    </body>
