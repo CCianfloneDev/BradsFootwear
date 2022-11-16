@@ -88,10 +88,10 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
       <title>Sneaker - View</title>
    </head>
    <body>
-        <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
+         <div class="container" id="sneaker_to_view">
+         <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
             <h2><a href="edit_sneaker.php?redirect=view_sneaker&id=<?=$sneaker_id?>">Edit This Sneaker</a></h2>
         <?php endif ?>
-         <div id="sneaker_to_view">
             <h3>Sneaker Name: <?=$sneaker[0]['sneaker_name']?></h3>
             <h3>Sneaker Size: <?=$sneaker[0]['sneaker_size']?></h3>
             <h3>Sneaker Value: $<?=$sneaker[0]['sneaker_value']?></h3>
@@ -132,20 +132,20 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
                 </small>
             </p>
          </div>
-         <div id="comments">
+         <div class="container" id="comments">
          <?php foreach($comments as $comment):?>
             <?php foreach($users as $user):?>
                 <?php if($comment['user_id'] === $user['user_id']):?>
                 <h1>
                     Comment posted by: <?=$user['user_name']?>
                     <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['admin_is_on'] === 1):?>
-                        <a onclick="return confirm('Are you sure you wish to delete this comment?')" href="edit_comment.php?delete=true&comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Delete this comment.</a>
+                        <small><a class="badge badge-danger" onclick="return confirm('Are you sure you wish to delete this comment?')" href="edit_comment.php?delete=true&comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Delete this comment.</a></small>
                     <?php endif ?>
                 </h1>
                 <?php endif ?>
             <?php endforeach ?>
             <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['logged_in_user_id'] == $comment['user_id']):?>
-                <p><a href="edit_comment.php?redirect=view_sneaker&comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Edit your comment</a></p>
+                <p><a class="badge badge-info" href="edit_comment.php?redirect=view_sneaker&comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Edit your comment</a></p>
             <?php endif ?>
             <small>
                 <?=$comment['date_insert']?> - initial creation
@@ -162,7 +162,7 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
          <?php endforeach ?>
          </div>
         <?php if(isset($_SESSION['logged_in_user'])):?>
-        <div id="comment_form">
+        <div class="container" id="comment_form">
         <h1>Leave a thought below!</h1>
          <form action="view_sneaker.php?id=<?=$sneaker_id?>" method="post">
                <fieldset>
