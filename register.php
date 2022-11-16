@@ -26,7 +26,15 @@ if (count($_POST) > 0) {
                 {
                   session_start();
                   $_SESSION['logged_in_user'] = $user_name;
-                  $_SESSION['logged_in_user_id'] = $user['user_id'];
+
+                  $query = "SELECT * FROM user WHERE user_name = :user_name";
+                  $statement = $db->prepare($query);
+                  // bind values
+                  $statement->bindValue(":user_name", $user_name, PDO::PARAM_STR);
+                  $statement->execute();
+                  $user = $statement->fetchAll();
+
+                  $_SESSION['logged_in_user_id'] = $user[0]['user_id'];
                   $_SESSION['admin_is_on'] = 0;
 
                   // if the admin_access field is 1 start admin session
