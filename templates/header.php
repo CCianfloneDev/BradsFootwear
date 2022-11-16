@@ -46,10 +46,18 @@ session_start();
       </li>
         <?php else:?>
         <li class="nav-item">
-            <a class="nav-link" href="login.php">Login</a>
+          <?php if(isset($_GET['id'])):?>
+            <a class="nav-link" href="login.php?redirect=view_sneaker&id=<?=$_GET['id']?>">Login</a>
+            <?php else :?>
+              <a class="nav-link" href="login.php">Login</a>
+          <?php endif ?>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="register.php">Sign-up</a>
+          <?php if(isset($_GET['id'])):?>
+              <a class="nav-link" href="register.php?redirect=view_sneaker&id=<?=$_GET['id']?>">Register</a>
+              <?php else :?>
+                <a class="nav-link" href="register.php">Register</a>
+            <?php endif ?>
         </li>
       <?php endif ?>
   </div>
