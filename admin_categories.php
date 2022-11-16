@@ -22,7 +22,7 @@
             <h1>Categories</h1>
             <h2><a href="create_category.php">Create category</a></h2>
             <?php foreach($categories as $category): ?>
-                <h3>Category name: <?=$category['category_name']?> <small><a class="badge badge-info" href="edit_category.php?id=<?=$category['category_id']?>">edit</a></small></h3>
+                <h3><?=$category['category_name']?> <small><a class="badge badge-info" href="edit_category.php?id=<?=$category['category_id']?>">edit</a></small></h3>
             <?php endforeach ?>
         </div>
     <?php endif ?>
