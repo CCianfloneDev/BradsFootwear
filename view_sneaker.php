@@ -186,10 +186,6 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
                </fieldset>
             </form>
          </div>
-        <?php else:?>
-            <h1>If you'd like to leave a comment on this sneaker post, follow the below links to sign in or register an account.</h1>
-            <h1><a href="login.php?redirect=view_sneaker&id=<?=$sneaker_id?>">Sign in</a></h1>
-            <h1><a href="register.php?redirect=view_sneaker&id=<?=$sneaker_id?>">Register</a></h1>
         <?php endif ?>
    </body>
 </html>
