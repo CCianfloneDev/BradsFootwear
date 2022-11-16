@@ -83,6 +83,7 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
 <!DOCTYPE html>
 <html>
    <head>
+   <link rel="stylesheet" type="text/css" href="styles.css">
    <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>Sneaker - View</title>
@@ -132,6 +133,9 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
                 </small>
             </p>
          </div>
+         <?php if(!isset($_SESSION['logged_in_user'])):?>
+            <div class="blur-content">
+        <?php endif ?>
          <div class="container" id="comments">
          <?php foreach($comments as $comment):?>
             <?php foreach($users as $user):?>
@@ -161,6 +165,9 @@ if (count($_POST) > 0 && strlen($_POST['comment_content']) > 0 && $_POST['comman
             <br>
          <?php endforeach ?>
          </div>
+         <?php if(!isset($_SESSION['logged_in_user'])):?>
+            </div>
+        <?php endif ?>
         <?php if(isset($_SESSION['logged_in_user'])):?>
         <div class="container" id="comment_form">
         <h1>Leave a thought below!</h1>
