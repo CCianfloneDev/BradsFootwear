@@ -133,7 +133,7 @@
 </div>
 <div class="blur-content">
    <?php endif ?>
-   <div class="container">
+   <div class="container prevent-select">
       <h2 style="text-align: center;">User submitted comments</h2>
       <div class="toast-container position-static">
          <?php foreach($comments as $comment):?>
@@ -141,11 +141,20 @@
             <div class="toast-header">
                <?php foreach($users as $user):?>
                <?php if($comment['user_id'] === $user['user_id']):?>
+               <?php if(!isset($_SESSION['logged_in_user'])) :?>
+               <strong class="me-auto">You tried to be sneaky and find a work around...</strong>
+               <small class="text-muted">I anticipated this.</small>
+               <?php else: ?>
                <strong class="me-auto"><?=$user['user_name']?></strong>
                <small class="text-muted"><?=$comment['date_modify']?></small>
+               <?php endif ?>
             </div>
             <div class="toast-body">
+               <?php if(!isset($_SESSION['logged_in_user'])):?>
+               You really think you can fool me? lol.
+               <?php else: ?>
                <?=$comment['comment_content']?>
+               <?php endif ?>
                <?php if(isset($_SESSION['logged_in_user']) && $_SESSION['logged_in_user_id'] == $comment['user_id']):?>
                <a class="badge badge-info" href="edit_comment.php?redirect=view_sneaker&comment_id=<?=$comment['comment_id']?>&sneaker_id=<?=$sneaker_id?>">Edit your comment</a>
                <?php endif ?>
