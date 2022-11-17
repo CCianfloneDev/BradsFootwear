@@ -67,6 +67,12 @@ if ($_POST['command'] == "Create") {
     
     // send value to DB.
     if ($statement->execute()) {
+        // delete any sneakers associated with this category.
+        $sneaker_query     = "DELETE FROM sneaker WHERE sneaker_category_id = :category_id";
+        $statement2 = $db->prepare($sneaker_query);
+        // bind values to delete statement
+        $statement2->bindValue(':category_id', $id);
+        $statement2->execute();
         // Redirect after update.
         header("Location: index.php");
         
