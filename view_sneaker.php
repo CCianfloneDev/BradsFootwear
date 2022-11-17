@@ -171,7 +171,7 @@
                <p>
                   <label for="comment_content">Type your thoughts below</label>
                   <br>
-                  <textarea placeholder="Leave your thoughts here..."rows="5" cols="40" name="comment_content"></textarea>
+                  <textarea placeholder="Leave your thoughts here..." rows="5" cols="40" name="comment_content" id="comment_content"></textarea>
                </p>
                <p>
                   <input type="submit" name="command" value="Comment" />
