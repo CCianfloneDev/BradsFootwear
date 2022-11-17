@@ -125,8 +125,8 @@
    <br>
 </div>
 <?php if(!isset($_SESSION['logged_in_user'])):?>
-<div class="card fluid alert alert-info alert-dismissible fade show" role="alert" style="max-width: 550px;">
-   If you wish to add or view a comment on this page please login..
+<div class="card fluid alert alert-warning alert-dismissible fade show" role="alert" style="max-width: 550px;">
+   If you wish to add or view comments on this page please login..
    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
    <span aria-hidden="true">&times;</span>
    </button>
