@@ -40,7 +40,7 @@ $category = $statement->fetchAll();
                      <p>
                         <input type="hidden" name="category_id" value="<?=$_GET['id']?>" />
                         <input type="submit" name="command" value="Update" />
-                        <input type="submit" name="command" value="Delete" onclick="return confirm('Are you sure you wish to delete this category?')" />
+                        <input type="submit" name="command" value="Delete" onclick="return confirm('Are you sure you wish to delete this category? It will delete any sneakers associated with it.')" />
                      </p>
                   </div>
                </fieldset>
