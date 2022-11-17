@@ -173,20 +173,14 @@
    <?php endif ?>
    <?php if(isset($_SESSION['logged_in_user'])):?>
    <div class="container"  style="max-width: 400px;" id="comment_form">
-      <h1>Leave a thought below!</h1>
       <form action="view_sneaker.php?id=<?=$sneaker_id?>" method="post">
-         <fieldset>
-            <div class="comment">
-               <p>
-                  <label for="comment_content">Type your thoughts below</label>
-                  <br>
-                  <textarea placeholder="Leave your thoughts here..." rows="5" cols="40" name="comment_content" id="comment_content"></textarea>
-               </p>
-               <p>
-                  <input type="submit" name="command" value="Comment" />
-               </p>
-            </div>
-         </fieldset>
+         <div class="form-group">
+            <label for="comment_content"><strong>Leave a comment!</strong></label>
+            <textarea placeholder="Leave your thoughts here..." class="form-control" name="comment_content" id="comment_content" rows="3"></textarea>
+         </div>
+         <p>
+            <input class="btn btn-primary" type="submit" name="command" value="Comment" />
+         </p>
       </form>
    </div>
    <?php endif ?>
