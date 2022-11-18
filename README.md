@@ -12,4 +12,8 @@ For my content management system for Brad’s Excellent Sneakers, I will build a
 
 Upon selecting a sneaker on the online catalogue, it will display an image of the sneaker, size, information, description, along with an estimated value. (All of this detail will be inputted by the site admin Brad). The site will not implement functionality to purchase said sneakers, it’s purely a source of information on his excellent selection- I’m limiting it to sneakers for simplicity however this model could be scaled for all sorts of clothing and items making it a versatile online catalogue. 
 
-![image](https://user-images.githubusercontent.com/24930067/200399658-792c415b-d3c7-40a6-aa37-9c3f9b7afb09.png)
+
+
+https://user-images.githubusercontent.com/24930067/202609654-02a0e418-aafc-41cc-a968-91b9180ddc22.mp4
+
+
